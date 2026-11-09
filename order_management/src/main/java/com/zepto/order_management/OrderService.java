@@ -5,13 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.zepto.exceptions.CustomerNotFound;
+import com.zepto.exceptions.CustomerNotFoundException;
 import com.zepto.exceptions.ProductNotFoundException;
 
 public class OrderService 
 {
 	
-	public void orderPlacing(int customerId,int productId,int quantity,int amount) throws SQLException, CustomerNotFound, ProductNotFoundException
+	public void orderPlacing(int customerId,int productId,int quantity,int amount) throws SQLException, CustomerNotFoundException, ProductNotFoundException
 	{
 	String query1="select * from customers where id=?";
 	String query2="select * from products where productId=?";
@@ -37,7 +37,7 @@ public class OrderService
 				
 				if(!found)
 				{
-					throw new CustomerNotFound("Customer does Not exist");
+					throw new CustomerNotFoundException("Customer does Not exist");
 				}
 			}
 		
@@ -142,7 +142,7 @@ public class OrderService
 			}
 			
 			
-			catch (CustomerNotFound | ProductNotFoundException| IllegalArgumentException |SQLException e)
+			catch (CustomerNotFoundException | ProductNotFoundException| IllegalArgumentException |SQLException e)
 			{
 				System.out.println(e.getMessage());
 				con.rollback();
